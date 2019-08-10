@@ -13,16 +13,15 @@
                     Membership type card
                 </div>
                 <div class="card-body">
-                    <input type="hidden" id="id" name="id" value=" {{ $membershipsTypes->id }}">
                     <div class="form-group">
                         <label for="name">{{ __('Name') }}</label>
                         <input type="text" id="name" name="name" class="form-control"
-                               value="{{$membershipsTypes->name}}" disabled>
+                               value="{{$membershipType->name}}" disabled>
                     </div>
                     <div class="form-group">
                         <label for="description">{{ __('Description') }}</label>
                         <input type="text" id="description" name="description"
-                               value="{{$membershipsTypes->description}}" class="form-control" disabled>
+                               value="{{$membershipType->description}}" class="form-control" disabled>
                     </div>
                 </div>
             </div>

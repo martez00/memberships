@@ -29,28 +29,28 @@ class MembershipTypeController extends Controller
 
     public function show($id)
     {
-        $membershipTypes = MembershipType::find($id);
-        return view('admin.memberships.types.show')->with('membershipsTypes', $membershipTypes);
+        $membershipType = MembershipType::find($id);
+        return view('admin.memberships.types.show')->with('membershipType', $membershipType);
     }
 
     public function edit($id)
     {
-        $membershipsTypes = MembershipType::find($id);
-        return view('admin.memberships.types.edit')->with('membershipsTypes', $membershipsTypes);
+        $membershipType = MembershipType::find($id);
+        return view('admin.memberships.types.edit')->with('membershipType', $membershipType);
     }
 
     public function update(UpdateMembershipTypeRequest $request, $id)
     {
         $validatedData = $request->validated();
-        $membershipsTypes = MembershipType::find($id);
-        $membershipsTypes->update($validatedData);
+        $membershipType = MembershipType::find($id);
+        $membershipType->update($validatedData);
         return redirect()->route('memberships_types.index')->with('success', 'Membership type was succesfully edited!');
     }
 
     public function destroy($id)
     {
-        $membershipsTypes = MembershipType::find($id);
-        $membershipsTypes->delete();
+        $membershipType = MembershipType::find($id);
+        $membershipType->delete();
         return redirect()->route('memberships_types.index')->with('success', 'Membership type was succesfully deleted!');
     }
 }
