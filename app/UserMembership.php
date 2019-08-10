@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserMemberships extends Model
+class UserMembership extends Model
 {
     public $primaryKey = 'id';
     public $timestamps = false;

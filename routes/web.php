@@ -23,7 +23,7 @@ Route::get('/403', 'HomeController@forbidden')->name('forbidden');
 Route::prefix('admin')->group(function () {
     Route::group(['middleware' => 'isAdmin'], function () {
         Route::get('/dashboard', 'HomeController@admin')->name('admin.dashboard');
-        Route::resource('memberships_types', 'MembershipsTypesController', [
+        Route::resource('memberships_types', 'MembershipTypeController', [
             'names' => [
                 'index' => 'memberships_types.index',
                 'edit' => 'memberships_types.edit',

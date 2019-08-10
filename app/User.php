@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function userMemberships()
     {
-        return $this->hasMany('App\UserMemberships', 'user_id');
+        return $this->hasMany('App\UserMembership', 'user_id');
     }
 
     public function isAdmin(){

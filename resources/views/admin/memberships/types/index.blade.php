@@ -16,11 +16,11 @@
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-lg-12 ">
+                        <div class="col-lg-12">
                             @if(count($membershipsTypes)>0)
                                 <div class="row form-group">
                                     <div class="table-responsive">
-                                        <table class="table table-hover" style="width:100%">
+                                        <table class="table table-hover">
                                             <tr>
                                                 <th style="width:20%">{{ __('Name') }}</th>
                                                 <th style="width:60%">{{ __('Description') }}</th>
@@ -29,16 +29,23 @@
                                             </tr>
                                             @foreach($membershipsTypes as $type)
                                                 <tr>
-                                                    <td><a href="{{ route('memberships_types.show', $type->id) }}">{{ $type->name }}</a></td>
+                                                    <td>
+                                                        <a href="{{ route('memberships_types.show', $type->id) }}">{{ $type->name }}</a>
+                                                    </td>
                                                     <td>{{ $type->description }}</td>
                                                     <td align="center"><a class="btn btn-sm btn-primary"
                                                                           href="{{route('memberships_types.edit', $type->id)}}">{{ __('Edit') }}</a>
                                                     </td>
                                                     <td align="center">
-                                                        <form action="{{ route('memberships_types.destroy', $type->id) }}" method="POST" onsubmit="return confirm('{{ __('Do you really want to delete?') }}');" style="display: inline-block;">
+                                                        <form action="{{ route('memberships_types.destroy', $type->id) }}"
+                                                              method="POST"
+                                                              onsubmit="return confirm('{{ __('Do you really want to delete?') }}');"
+                                                              style="display: inline-block;">
                                                             <input type="hidden" name="_method" value="DELETE">
-                                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                            <input type="submit" class="btn btn-sm btn-danger" value="{{ __('Delete') }}">
+                                                            <input type="hidden" name="_token"
+                                                                   value="{{ csrf_token() }}">
+                                                            <input type="submit" class="btn btn-sm btn-danger"
+                                                                   value="{{ __('Delete') }}">
                                                         </form>
                                                     </td>
                                                 </tr>
@@ -46,7 +53,9 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="row form-group justify-content-center">{{$membershipsTypes->links()}}</div>
+                                @if($membershipsTypes->hasPages())
+                                    <div class="row form-group justify-content-center">{{$membershipsTypes->links()}}</div>
+                                @endif
                             @else
                                 <div class="row form-group">
                                     <div class="alert alert-warning mb-0">There are no created memberships types.</div>

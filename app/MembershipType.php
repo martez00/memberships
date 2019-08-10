@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MembershipsTypes extends Model
+class MembershipType extends Model
 {
     public $primaryKey = 'id';
     public $timestamps = false;
@@ -16,6 +16,6 @@ class MembershipsTypes extends Model
 
     public function memberships()
     {
-        return $this->hasMany('App\Memberships', 'type_id');
+        return $this->hasMany('App\Membership', 'type_id');
     }
 }

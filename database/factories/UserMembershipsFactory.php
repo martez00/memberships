@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\UserMemberships;
+use App\UserMembership;
 use Faker\Generator as Faker;
 
-$factory->define(UserMemberships::class, function (Faker $faker) {
+$factory->define(UserMembership::class, function (Faker $faker) {
     return [
         //
     ];
