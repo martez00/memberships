@@ -12,38 +12,45 @@
                         <div class="col-lg-12">
                             <a class="btn btn-success" style="margin-bottom:5px;"
                                href="{{route('memberships_types.create')}}">[+]
-                                Create new type</a>
+                                {{ __('Create new type') }}</a>
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-lg-12">
+                        <div class="col-lg-12 ">
                             @if(count($membershipsTypes)>0)
-                                <table class="table-bordered table-primary" style="width:100%">
-                                    <tr>
-                                        <th style="width:10%">Name</th>
-                                        <th style="width:20%">Description</th>
-                                        <th style="width:10%"></th>
-                                        <th style="width:10%"></th>
-                                    </tr>
-                                    @foreach($membershipsTypes as $type)
-                                        <tr>
-                                            <td>{{ $type->name }}</td>
-                                            <td>{{ $type->description }}</td>
-                                            <td align="center"><a class="btn btn-sm btn-info"
-                                                                  href="{{route('memberships_types.edit', ['id' => $type->id])}}">Edit</a>
-                                            </td>
-                                            <td align="center">
-                                                {!! Form::open(['action'=>['MembershipsTypescontroller@destroy', $type->id], 'method'=>'POST']) !!}
-                                                {!! Form::hidden('_method', 'DELETE') !!}
-                                                {!! Form::submit('Delete', ['class'=>'btn btn-sm btn-danger']) !!}
-                                                {!! Form::close() !!}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </table>
-                                <div class="row justify-content-center">{{$membershipsTypes->links()}}</div>
+                                <div class="row form-group">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover" style="width:100%">
+                                            <tr>
+                                                <th style="width:20%">{{ __('Name') }}</th>
+                                                <th style="width:60%">{{ __('Description') }}</th>
+                                                <th style="width:10%"></th>
+                                                <th style="width:10%"></th>
+                                            </tr>
+                                            @foreach($membershipsTypes as $type)
+                                                <tr>
+                                                    <td><a href="{{ route('memberships_types.show', $type->id) }}">{{ $type->name }}</a></td>
+                                                    <td>{{ $type->description }}</td>
+                                                    <td align="center"><a class="btn btn-sm btn-primary"
+                                                                          href="{{route('memberships_types.edit', $type->id)}}">{{ __('Edit') }}</a>
+                                                    </td>
+                                                    <td align="center">
+                                                        <form action="{{ route('memberships_types.destroy', $type->id) }}" method="POST" onsubmit="return confirm('{{ __('Do you really want to delete?') }}');" style="display: inline-block;">
+                                                            <input type="hidden" name="_method" value="DELETE">
+                                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                            <input type="submit" class="btn btn-sm btn-danger" value="{{ __('Delete') }}">
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row form-group justify-content-center">{{$membershipsTypes->links()}}</div>
                             @else
-                                <div class="alert alert-warning mb-0">There are no created memberships types.</div>
+                                <div class="row form-group">
+                                    <div class="alert alert-warning mb-0">There are no created memberships types.</div>
+                                </div>
                             @endif
                         </div>
                     </div>

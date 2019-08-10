@@ -10,18 +10,22 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header text-black font-weight-bold">
-                    Create new membership type
+                    Edit membership type
                 </div>
                 <div class="card-body">
-                    <form action="{{ route("memberships_types.store") }}" method="POST">
+                    <form action="{{ route("memberships_types.update", [$membershipsTypes->id]) }}" method="POST">
                         @csrf
+                        @method('PUT')
+                        <input type="hidden" id="id" name="id" value=" {{ $membershipsTypes->id }}">
                         <div class="form-group">
                             <label for="name">{{ __('Name') }}</label>
-                            <input type="text" id="name" name="name" class="form-control" required>
+                            <input type="text" id="name" name="name" class="form-control"
+                                   value="{{$membershipsTypes->name}}" required>
                         </div>
                         <div class="form-group">
                             <label for="description">{{ __('Description') }}</label>
-                            <input type="text" id="description" name="description" class="form-control">
+                            <input type="text" id="description" name="description"
+                                   value="{{$membershipsTypes->description}}" class="form-control">
                         </div>
                         <div class="form-group">
                             <input class="btn btn-primary" type="submit" value="{{ trans('Save') }}">
@@ -30,6 +34,5 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection

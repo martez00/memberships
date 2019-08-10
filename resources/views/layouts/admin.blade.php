@@ -10,16 +10,19 @@
                             Admin Menu
                         </div>
                         <ul class="list-group list-group-flush">
-                            <li class="{{ (Route::currentRouteName() == 'admin.dashboard') ? 'active-admin-menu' : '' }} list-group-item" style="cursor:pointer">
-                                <a style="text-decoration: none; color: inherit;" href="{{ route('admin.dashboard') }}">
+                            <a style="text-decoration: none; color: inherit;" href="{{ route('admin.dashboard') }}">
+                                <li class="{{ (strpos(Route::currentRouteName(), 'admin.dashboard') !== false) ? 'active-admin-menu' : '' }} list-group-item"
+                                    style="cursor:pointer">
                                     {{ __('Admin Dashboard') }}
-                                </a>
-                            </li>
-                            <li class="{{ (Route::currentRouteName() == 'memberships_types.index') ? 'active-admin-menu' : '' }} list-group-item" style="cursor:pointer">
-                                <a style="text-decoration: none; color: inherit;" href="{{ route('memberships_types.index') }}">
+                                </li>
+                            </a>
+                            <a style="text-decoration: none; color: inherit;"
+                               href="{{ route('memberships_types.index') }}">
+                                <li class="{{ (strpos(Route::currentRouteName(), 'memberships_types') !== false) ? 'active-admin-menu' : '' }} list-group-item"
+                                    style="cursor:pointer">
                                     {{ __('Memberships Types') }}
-                                </a>
-                            </li>
+                                </li>
+                            </a>
                             <li class="list-group-item" style="cursor:pointer">
                                 Memberships
                             </li>
@@ -30,6 +33,7 @@
                     </div>
                 </div>
                 <div class="col-lg-9">
+                    @include('inc.messages')
                     @yield('admin_content')
                 </div>
             </div>

@@ -28,6 +28,10 @@ Route::prefix('admin')->group(function () {
                 'index' => 'memberships_types.index',
                 'edit' => 'memberships_types.edit',
                 'create' => 'memberships_types.create',
+                'show' => 'memberships_types.show',
+                'store' => 'memberships_types.store',
+                'update' => 'memberships_types.update',
+                'destroy' => 'memberships_types.destroy',
             ]]);
     });
 });
