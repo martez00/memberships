@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMembershipsTable extends Migration
+class CreateExtendTokensTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,16 @@ class CreateMembershipsTable extends Migration
      */
     public function up()
     {
-        Schema::create('memberships', function (Blueprint $table) {
+        Schema::create('extend_tokens', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->mediumText('description')->nullable();
-            $table->decimal('price', 10, 2)->default("0.00");
-            $table->unsignedBigInteger('type_id');
+            $table->mediumText('token');
+            $table->unsignedBigInteger('user_membership_id');
+            $table->tinyInteger('used')->default(0);
 
-            $table->foreign('type_id')
+            $table->foreign('user_membership_id')
                 ->references('id')
-                ->on('memberships_types')
+                ->on('user_memberships')
                 ->onDelete('cascade');
-
-            $table->timestamps();
         });
     }
 
@@ -36,6 +33,6 @@ class CreateMembershipsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('memberships');
+        Schema::dropIfExists('extend_tokens');
     }
 }

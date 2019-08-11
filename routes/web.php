@@ -1,19 +1,6 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', 'HomeController@index');
 
 Auth::routes();
 
@@ -33,5 +20,30 @@ Route::prefix('admin')->group(function () {
                 'update' => 'memberships_types.update',
                 'destroy' => 'memberships_types.destroy',
             ]]);
+        Route::resource('memberships', 'MembershipController', [
+            'names' => [
+                'index' => 'memberships.index',
+                'edit' => 'memberships.edit',
+                'create' => 'memberships.create',
+                'show' => 'memberships.show',
+                'store' => 'memberships.store',
+                'update' => 'memberships.update',
+                'destroy' => 'memberships.destroy',
+            ]]);
+        Route::get('/users_memberships', 'UserMembershipController@index')->name('users_memberships.index');
     });
 });
+
+Route::get('/memberships', 'MembershipController@mainIndex')->name('memberships.mainIndex');
+Route::get('/memberships/type/{id}', 'MembershipController@indexByType')->name('memberships.indexByType');
+Route::get('/memberships/{id}', 'MembershipController@mainShow')->name('memberships.mainShow');
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/user/dashboard', 'HomeController@user')->name('user.dashboard');
+    Route::get('/user_memberships/{id}', 'UserMembershipController@userMemberships')->name('user.memberships');
+    Route::get('/memberships/{id}/subscribe', 'MembershipController@showSubscribe')->name('memberships.showSubscribe');
+    Route::post('/memberships/{id}/subscribe', 'StripePaymentController@stripePost')->name('stripe.post');
+});
+
+Route::get('/user_memberships/extend/{token}', 'UserMembershipController@showExtend')->name('user_membership.showExtend');
+Route::post('/user_memberships/extend', 'UserMembershipController@extend')->name('user_membership.extend');

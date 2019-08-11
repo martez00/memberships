@@ -21,8 +21,7 @@ class MembershipTypeController extends Controller
 
     public function store(StoreMembershipTypeRequest $request)
     {
-        $validatedData = $request->validated();
-        $membershipType = new MembershipType($validatedData);
+        $membershipType = new MembershipType($request->all());
         $membershipType->save();
         return redirect()->route('memberships_types.index')->with('success', 'New membership type was succesfully created!');
     }
@@ -41,9 +40,8 @@ class MembershipTypeController extends Controller
 
     public function update(UpdateMembershipTypeRequest $request, $id)
     {
-        $validatedData = $request->validated();
         $membershipType = MembershipType::find($id);
-        $membershipType->update($validatedData);
+        $membershipType->update($request->all());
         return redirect()->route('memberships_types.index')->with('success', 'Membership type was succesfully edited!');
     }
 

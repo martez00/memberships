@@ -3,7 +3,7 @@
 @section('admin_content')
     <div class="row form-group">
         <div class="col-sm-12">
-            <a class="btn btn-danger btn-sm" href="{{ url()->previous() }}">Back</a>
+            <a class="btn btn-danger btn-sm" href="{{ route("memberships_types.index") }}">Back</a>
         </div>
     </div>
     <div class="row form-group">
@@ -17,11 +17,11 @@
                         @csrf
                         <div class="form-group">
                             <label for="name">{{ __('Name') }}</label>
-                            <input type="text" id="name" name="name" class="form-control" required>
+                            <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}" required>
                         </div>
                         <div class="form-group">
                             <label for="description">{{ __('Description') }}</label>
-                            <input type="text" id="description" name="description" class="form-control">
+                            <input type="text" id="description" name="description" class="form-control" value="{{ old('description') }}">
                         </div>
                         <div class="form-group">
                             <input class="btn btn-primary" type="submit" value="{{ trans('Save') }}">

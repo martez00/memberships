@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -35,7 +36,9 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav mr-auto">
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('memberships.mainIndex') }}">{{ __('All memberships') }}</a>
+                    </li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -63,6 +66,9 @@
                                         {{ __('Admin Dashboard') }}
                                     </a>
                                 @endif
+                                <a class="dropdown-item" href="{{ route('user.dashboard') }}">
+                                    {{ __('User Dashboard') }}
+                                </a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -82,6 +88,9 @@
     </nav>
 
     <div class="container-fluid">
+        <div class="container mt-3">
+            @include('inc.messages')
+        </div>
         @yield('content')
     </div>
 </div>

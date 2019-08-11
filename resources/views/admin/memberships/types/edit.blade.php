@@ -3,7 +3,7 @@
 @section('admin_content')
     <div class="row form-group">
         <div class="col-sm-12">
-            <a class="btn btn-danger btn-sm" href="{{ url()->previous() }}">Back</a>
+            <a class="btn btn-danger btn-sm" href="{{ route("memberships_types.index") }}">Back</a>
         </div>
     </div>
     <div class="row form-group">

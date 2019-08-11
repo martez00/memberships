@@ -18,22 +18,29 @@
                             </a>
                             <a style="text-decoration: none; color: inherit;"
                                href="{{ route('memberships_types.index') }}">
-                                <li class="{{ (strpos(Route::currentRouteName(), 'memberships_types') !== false) ? 'active-admin-menu' : '' }} list-group-item"
+                                <li class="{{ (strpos(Route::currentRouteName(), 'memberships_types.') !== false) ? 'active-admin-menu' : '' }} list-group-item"
                                     style="cursor:pointer">
                                     {{ __('Memberships Types') }}
                                 </li>
                             </a>
-                            <li class="list-group-item" style="cursor:pointer">
-                                Memberships
-                            </li>
-                            <li class="list-group-item" style="cursor:pointer">
-                                Users Memberships
-                            </li>
+                            <a style="text-decoration: none; color: inherit;"
+                               href="{{ route('memberships.index') }}">
+                                <li class="{{ (strpos(Route::currentRouteName(), 'memberships.') !== false && strpos(Route::currentRouteName(), 'users_memberships.') === false) ? 'active-admin-menu' : '' }} list-group-item"
+                                    style="cursor:pointer">
+                                    {{ __('Memberships') }}
+                                </li>
+                            </a>
+                            <a style="text-decoration: none; color: inherit;"
+                               href="{{ route('users_memberships.index') }}">
+                                <li class="{{ (strpos(Route::currentRouteName(), 'users_memberships.') !== false) ? 'active-admin-menu' : '' }} list-group-item"
+                                    style="cursor:pointer">
+                                    {{ __('Users memberships') }}
+                                </li>
+                            </a>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-9">
-                    @include('inc.messages')
                     @yield('admin_content')
                 </div>
             </div>
