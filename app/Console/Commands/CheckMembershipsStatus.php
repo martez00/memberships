@@ -41,20 +41,24 @@ class CheckMembershipsStatus extends Command
      */
     public function handle()
     {
-        $userMemberships = UserMembership::where('end_date', '<', date("Y-m-d H:i:s"))->where('status', 'ACTIVE')->get();
+        $userMemberships = UserMembership::where('end_date', '<', date("Y-m-d H:i:s"))->where('status', 'ACTIVE')->with('extendTokens')->get();
         foreach($userMemberships as $userMembership){
             $userMembership->status = "EXPIRED";
             $userMembership->save();
-
-            $token = str_random(32);
-            $extendToken = new ExtendToken(
-                [
-                    'token' => $token,
-                    'user_membership_id' => $userMembership->id
-                ]
-            );
-            $extendToken->save();
-
+            //if membership has a token it means that it was finished earlier, so we can't generate new extend token
+            if($userMembership->extendTokens->first()->id){
+                unset($token);
+            }
+            else {
+                $token = str_random(32) . strtotime("now");
+                $extendToken = new ExtendToken(
+                    [
+                        'token' => $token,
+                        'user_membership_id' => $userMembership->id
+                    ]
+                );
+                $extendToken->save();
+            }
             Mail::to($userMembership->user->email)->send(new SendExpiredMail($userMembership, $token));
         }
     }

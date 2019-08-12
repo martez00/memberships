@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
-class MembershipsTypesTableSeeder extends Seeder
+class MembershipTypeTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,7 +14,7 @@ class MembershipsTypesTableSeeder extends Seeder
     {
         DB::table('memberships_types')->insert([
             'name' => 'CG',
-            'description' => 'Description of CG'
+            'description' => 'Description of CG',
         ]);
         DB::table('memberships_types')->insert([
             'name' => 'Programming',

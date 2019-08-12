@@ -11,9 +11,9 @@
                     <div class="card-body">
                         <div class="row form-group">
                             <div class="col-lg-12">
-                                Memberships by type: <a href="{{ route('memberships.mainIndex') }}">All</a>
+                                Memberships by type: <a href="{{ route('memberships.mainIndex') }}" class="@if(!$selectedType) active-memberships-search @endif">All</a>
                                 @foreach($membershipsTypes as $type)
-                                    <a href="{{ route('memberships.indexByType', $type->id) }}">| {{ $type->name }}</a>
+                                    <a href="{{ route('memberships.indexByType', $type->id) }}">| <span class="@if($selectedType && $selectedType == $type->id) active-memberships-search @endif">{{ $type->name }}</span></a>
                                 @endforeach
                             </div>
                         </div>

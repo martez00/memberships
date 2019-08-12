@@ -39,9 +39,12 @@
                     </div>
                 </div>
             @empty
-                <div class="alert alert-warning">Sorry, but currently there are no memberships! Please visit our website
-                    later!
-                </div>
+                    <div class="card mb-12">
+                        <div class="alert alert-warning m-0">Sorry, but currently there are no memberships! Please visit our
+                            website
+                            later!
+                        </div>
+                    </div>
             @endforelse
         </div>
     </div>

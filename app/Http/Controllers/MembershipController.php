@@ -20,14 +20,14 @@ class MembershipController extends Controller
     {
         $memberships = Membership::orderBy('id', 'desc')->paginate(10);
         $membershipsTypes = MembershipType::all();
-        return view('memberships.index')->with('memberships', $memberships)->with('membershipsTypes', $membershipsTypes);
+        return view('memberships.index')->with('memberships', $memberships)->with('membershipsTypes', $membershipsTypes)->with('selectedType', null);
     }
 
     public function indexByType($id)
     {
         $membershipByType = Membership::where('type_id', $id)->orderBy('id', 'desc')->paginate(10);
         $membershipsTypes = MembershipType::all();
-        return view('memberships.index')->with('memberships', $membershipByType)->with('membershipsTypes', $membershipsTypes);
+        return view('memberships.index')->with('memberships', $membershipByType)->with('membershipsTypes', $membershipsTypes)->with('selectedType', $id);
     }
 
     public function create()

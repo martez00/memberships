@@ -14,7 +14,7 @@ class ExtendToken extends Model
         'token', 'user_membership_id'
     ];
 
-    public function user()
+    public function userMembership()
     {
         return $this->belongsTo('App\UserMembership', 'user_membership_id');
     }

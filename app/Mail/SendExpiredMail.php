@@ -20,7 +20,7 @@ class SendExpiredMail extends Mailable
      * @param UserMembership $userMembership
      * @param $token
      */
-    public function __construct(UserMembership $userMembership, $token)
+    public function __construct(UserMembership $userMembership, $token = null)
     {
         $this->userMembership = $userMembership;
         $this->token = $token;
