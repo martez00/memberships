@@ -44,7 +44,7 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        $userMemberships = UserMembership::where('end_date', '<', date("Y-m-d H:i:s"))->where('status', 'ACTIVE')->where('user_id',  $user->id)->with('extendTokens')->get();
+        $userMemberships = UserMembership::where('end_date', '<', date("Y-m-d H:i:s"))->where('status', 'ACTIVE')->where('user_id',  auth()->user()->id)->with('extendTokens')->get();
         foreach($userMemberships as $userMembership){
             $userMembership->status = "EXPIRED";
             $userMembership->save();
