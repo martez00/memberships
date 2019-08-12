@@ -17,7 +17,7 @@ class UserMembershipController extends Controller
 
     public function userMemberships($id)
     {
-        $memberships = UserMembership::where('user_id', $id)->orderBy('end_date', 'DESC')->with('extendToken')->paginate(10);
+        $memberships = UserMembership::where('user_id', $id)->orderBy('end_date', 'DESC')->paginate(10);
         return view('user.memberships.index')->with('memberships', $memberships);
     }
 
