@@ -51,7 +51,7 @@ class LoginController extends Controller
             $userMembership->save();
             //if membership has a token it means that it was finished earlier, so we can't generate new extend token
             if($userMembership->extendTokens->first()){
-                unset($token);
+                $token = null;
             }
             else {
                 $token = str_random(32) . strtotime("now");
