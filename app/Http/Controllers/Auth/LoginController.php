@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\ExtendToken;
 use App\Http\Controllers\Controller;
 use App\Mail\SendExpiredMail;
 use App\UserMembership;
