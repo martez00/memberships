@@ -94,5 +94,6 @@
         @yield('content')
     </div>
 </div>
+{{ TawkTo::widgetCode() }}
 </body>
 </html>
