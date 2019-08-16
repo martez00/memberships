@@ -24,7 +24,13 @@
                                        id="expiration_in_minutes" value="{{ request()->get('expiration_in_minutes') }}">
                             </div>
                             <div class="col-lg-4">
-                                <label for="search">&nbsp;</label>
+                                <label for="expiration_in_minutes">{{ __('User name') }}</label>
+                                <input type="text" class="form-control" name="user_name"
+                                       id="user_name" value="{{ request()->get('user_name') }}">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-lg-12">
                                 <button type="submit" class="btn btn-block btn-primary" id="search">Search</button>
                             </div>
                         </div>

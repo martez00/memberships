@@ -26,6 +26,10 @@ class UserMembershipController extends Controller
             $q->where('user_memberships.status', 'ACTIVE');
         });
 
+        $query->whereHas('user')->join('users', 'users.id', '=', 'user_memberships.user_id')->when(request()->has('user_name'), function ($q) {
+            $q->where('users.name', 'LIKE', '%'.request()->get('user_name').'%');
+        });
+
         $memberships = $query->with('user')->paginate(10);
 
         return view('admin.memberships.users_memberships.index', compact('memberships', 'membershipsStatusArr'));
