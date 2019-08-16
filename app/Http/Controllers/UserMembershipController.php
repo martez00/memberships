@@ -4,15 +4,31 @@ namespace App\Http\Controllers;
 
 use App\ExtendToken;
 use App\Http\Requests\ExtendUserMembershipRequest;
+use App\Http\Requests\UserMembershipsRequest;
 use App\UserMembership;
 use Carbon\Carbon;
 
 class UserMembershipController extends Controller
 {
-    public function index()
+    public function index(UserMembershipsRequest $request)
     {
-        $memberships = UserMembership::orderBy('end_date', 'DESC')->with('user')->paginate(10);
-        return view('admin.memberships.users_memberships.index')->with('memberships', $memberships);
+        $membershipsStatusArr = UserMembership::statusList;
+        $membershipsStatusArr=['all' => ['name'=>'ALL', 'text' => 'All']] + $membershipsStatusArr;
+
+        $query = UserMembership::query();
+
+        $query->when(request()->has('status') && request()->get('status') !== 'ALL', function ($q) {
+            $q->where('user_memberships.status', request()->get('status'));
+        });
+
+        $query->when(request()->has('expiration_in_minutes') && request()->get('expiration_in_minutes') !== null, function ($q) {
+            $q->where('user_memberships.end_date', '<=', Carbon::now()->addMinutes(request()->get('expiration_in_minutes')));
+            $q->where('user_memberships.status', 'ACTIVE');
+        });
+
+        $memberships = $query->with('user')->paginate(10);
+
+        return view('admin.memberships.users_memberships.index', compact('memberships', 'membershipsStatusArr'));
     }
 
     public function userMemberships($id)
