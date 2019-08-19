@@ -46,7 +46,7 @@ class CheckMembershipsStatus extends Command
             $userMembership->status = "EXPIRED";
             $userMembership->save();
             //if membership has a token it means that it was finished earlier, so we can't generate new extend token
-            if($userMembership->extendTokens->first()->id){
+            if($userMembership->extendTokens->first()){
                 unset($token);
             }
             else {
