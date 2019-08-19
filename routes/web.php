@@ -35,7 +35,6 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::get('/memberships', 'MembershipController@mainIndex')->name('memberships.mainIndex');
-Route::get('/memberships/type/{id}', 'MembershipController@indexByType')->name('memberships.indexByType');
 Route::get('/memberships/{id}', 'MembershipController@mainShow')->name('memberships.mainShow');
 
 Route::group(['middleware' => 'auth'], function () {

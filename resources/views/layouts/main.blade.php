@@ -1,18 +1,7 @@
 @extends('layouts.app')
 
 @section('app_content')
-    <header id="header">
-        <div id="topbar">
-            <div class="container">
-                <div class="social-links">
-                    <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-                    <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-                    <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
-                    <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
-                </div>
-            </div>
-        </div>
-
+    <header id="header" class="header-scrolled">
         <div class="container">
 
             <div class="logo float-left">
@@ -22,8 +11,8 @@
 
             <nav class="main-nav float-right d-none d-lg-block">
                 <ul>
-                    <li><a href="{{ url('/') }}">Home</a></li>
-                    <li><a href="#">Courses</a></li>
+                    <li class="{{ (strpos(Route::currentRouteName(), 'home') !== false || Route::currentRouteName() === null) ? 'active-menu' : '' }}"><a href="{{ url('/') }}">Home</a></li>
+                    <li class="{{ (strpos(Route::currentRouteName(), 'memberships.mainIndex') !== false) ? 'active-menu' : '' }}"><a href="{{ route('memberships.mainIndex') }}">Courses</a></li>
                     <li><a href="#">Contact Us</a></li>
                     @guest
                         <li>

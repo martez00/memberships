@@ -18,7 +18,7 @@
 
         </div>
     </section>
-    <section id="about">
+    <section id="about" class="section-bg">
 
         <div class="container">
             <div class="row">
@@ -32,8 +32,8 @@
                 <div class="col-lg-7 col-md-6">
                     <div class="about-content">
                         <h2>About Us</h2>
-                        <h3>Odio sed id eos et laboriosam consequatur eos earum soluta.</h3>
-                        <p>Coursera was founded in 2012 by two Stanford Computer Science professors who wanted to share
+                        <h3>The most popular online coding school in East Europe since 2012!</h3>
+                        <p>pCourses was founded in 2012 by two Stanford Computer Science professors who wanted to share
                             their knowledge and skills with the world. Professors Daphne Koller and Andrew Ng put their
                             courses online for anyone to take – and taught more learners in a few months than they could
                             have in an entire lifetime in the classroom.</p>
@@ -44,7 +44,7 @@
             </div>
         </div>
     </section>
-    <section id="pricing" class="wow fadeInUp section-bg">
+    <section id="pricing" class="wow fadeInUp">
 
         <div class="container">
 

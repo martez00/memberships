@@ -14,10 +14,10 @@ html {
 }
 
 body {
-  background: #fff;
   color: #444;
   font-family: "Open Sans", sans-serif;
   height: 100%;
+  background: #f5f8fd;
 }
 
 a {
@@ -60,7 +60,9 @@ h6 {
     font-weight:bold;
     padding: 5px;
 }
-
+.active-menu {
+  background-color: #f5f8fd;
+}
 /* Back to top button */
 
 .back-to-top {
@@ -171,9 +173,6 @@ h6 {
 
 #header {
   height: 110px;
-  transition: all 0.5s;
-  z-index: 997;
-  transition: all 0.5s;
   padding: 20px 0;
   position: fixed;
   left: 0;
@@ -194,9 +193,6 @@ h6 {
 }
 
 #header.header-scrolled #topbar,
-#header.header-pages #topbar {
-  display: none;
-}
 
 #header .logo h1 {
   font-size: 36px;
@@ -236,6 +232,10 @@ h6 {
   background-size: cover;
 }
 
+#page {
+  padding-top: 90px;
+  position: relative;
+}
 #intro .intro-info h2 {
   color: #413e66;
   margin-bottom: 40px;
@@ -511,7 +511,7 @@ h6 {
 --------------------------------*/
 
 .section-bg {
-  background: #f5f8fd;
+  background: #fff;
 }
 
 /* About Us Section

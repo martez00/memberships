@@ -6,7 +6,6 @@ use App\Http\Requests\StoreMembershipRequest;
 use App\Http\Requests\UpdateMembershipRequest;
 use App\Membership;
 use App\MembershipType;
-use App\UserMembership;
 use Illuminate\Http\Request;
 
 class MembershipController extends Controller
@@ -16,18 +15,27 @@ class MembershipController extends Controller
         $memberships = Membership::orderBy('id', 'desc')->paginate(10);
         return view('admin.memberships.index')->with('memberships', $memberships);
     }
-    public function mainIndex()
+    public function mainIndex(Request $request)
     {
-        $memberships = Membership::orderBy('id', 'desc')->paginate(10);
-        $membershipsTypes = MembershipType::all();
-        return view('memberships.index')->with('memberships', $memberships)->with('membershipsTypes', $membershipsTypes)->with('selectedType', null);
-    }
+        $query = Membership::query();
 
-    public function indexByType($id)
-    {
-        $membershipByType = Membership::where('type_id', $id)->orderBy('id', 'desc')->paginate(10);
+        $query->when(request()->has('type_id') && request()->get('type_id'), function ($q) {
+            $q->where('memberships.type_id', request()->get('type_id'));
+        });
+
+        $query->when(request()->has('name') && request()->get('name'), function ($q) {
+            $q->where('memberships.name', 'LIKE', '%'.request()->get('name').'%');
+        });
+
+        $query->when(request()->has('description') && request()->get('description'), function ($q) {
+            $q->where('memberships.description', 'LIKE', '%'.request()->get('description').'%');
+        });
+
+        $memberships = $query->orderBy('id', 'desc')->paginate(10);
+
         $membershipsTypes = MembershipType::all();
-        return view('memberships.index')->with('memberships', $membershipByType)->with('membershipsTypes', $membershipsTypes)->with('selectedType', $id);
+
+        return view('memberships.index')->with('memberships', $memberships)->with('membershipsTypes', $membershipsTypes)->with('selectedType', null);
     }
 
     public function create()
