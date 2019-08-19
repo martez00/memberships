@@ -33,6 +33,6 @@ class SendExpiredMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Expired membership')->view('mails.expired');
+        return $this->subject('Expired '.$this->userMembership->membership->name.' membership')->view('mails.expired');
     }
 }
