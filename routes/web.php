@@ -41,7 +41,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/user/dashboard', 'HomeController@user')->name('user.dashboard');
     Route::get('/user_memberships/{id}', 'UserMembershipController@userMemberships')->name('user.memberships');
     Route::get('/memberships/{id}/subscribe', 'MembershipController@showSubscribe')->name('memberships.showSubscribe');
-    Route::post('/memberships/{id}/subscribe', 'StripePaymentController@stripePost')->name('stripe.post');
+    Route::get('/memberships/{membership_id}/success/{user_id}', 'StripePaymentController@successfulPayment')->name('memberships.successfulPayment');
+    Route::post('/memberships/{id}/initiatePayment', 'StripePaymentController@createSession')->name('stripe.createSession');
 });
 
 Route::get('/user_memberships/extend/{token}', 'UserMembershipController@showExtend')->name('user_membership.showExtend');

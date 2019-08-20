@@ -3,35 +3,72 @@
 namespace App\Http\Controllers;
 
 use App\Membership;
+use App\StripeSession;
 use App\UserMembership;
-use Carbon\Carbon;
+use http\Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Stripe;
 
 class StripePaymentController extends Controller
 {
-    public function stripePost(Request $request, $id)
+
+    public function __construct()
+    {
+        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+    }
+
+    public function createSession(Request $request, $id)
     {
         $membership = Membership::find($id);
-        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-        Stripe\Charge::create([
-            "amount" => $membership->price * 100,
-            "currency" => "eur",
-            "source" => $request->stripeToken,
-            "description" => $membership->description
-        ]);
 
-        $userMembership = new UserMembership(
-            [
-                'user_id' => auth()->user()->id,
-                'membership_id' => $membership->id,
-                'status' => "ACTIVE",
-                'start_date' => Carbon::now(),
-                'end_date' => Carbon::now()->addMinutes(5),
-            ]
-        );
-        $userMembership->save();
+        try {
+            $session = Stripe\Checkout\Session::create([
+                "success_url" => route('memberships.successfulPayment',
+                    ['membership_id' => $membership->id, 'user_id' => auth()->user()->id]),
+                "cancel_url" => "https://example.com/cancel",
+                "payment_method_types" => ["card"],
+                "line_items" => [
+                    [
+                        "name" => $membership->name,
+                        "description" => $membership->description,
+                        "amount" => $membership->price * 100,
+                        "currency" => "eur",
+                        "quantity" => 1
+                    ]
+                ]
+            ]);
 
-        return redirect()->route('user.memberships', auth()->user()->id)->with('success', 'Membership was succesfully subscribed!');;
+            $userMembership = new UserMembership(
+                [
+                    'user_id' => auth()->user()->id,
+                    'membership_id' => $membership->id,
+                    'status' => "WAITING",
+                    'start_date' => null,
+                    'end_date' => null,
+                ]
+            );
+            $userMembership->save();
+
+            $stripeSession = new StripeSession(
+                [
+                    'session_id' => Crypt::encryptString($session->id),
+                    'user_membership_id' => $userMembership->id
+                ]
+            );
+            $stripeSession->save();
+
+            $response = $session;
+        } catch (Exception $e) {
+            $response = $e->getMessage();
+        }
+
+        return $response;
+    }
+
+    public function successfulPayment($membership_id, $user_id)
+    {
+        $membership = Membership::find($membership_id);
+        return view('memberships.subscribed')->with('membership', $membership);
     }
 }

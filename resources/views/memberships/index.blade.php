@@ -44,7 +44,8 @@
                                                     @endforeach
                                                 </ul>
                                             </div>
-                                            <input type="hidden" name="price_param" value="{{ request()->get('price_param') }}" id="search_param">
+                                            <input type="hidden" name="price_param"
+                                                   value="{{ request()->get('price_param') }}" id="search_param">
                                             <input type="text" class="form-control" name="price"
                                                    id="price" value="{{ request()->get('price') }}">
                                         </div>
@@ -88,10 +89,14 @@
                                                                 <td>{{ $membership->type->name }}</td>
                                                                 <td align="center">
                                                                     @if(Auth::user())
-                                                                        @if($membership->isActiveForUser(Auth::user()->id) == 1)
+                                                                        @if($membership->isActiveForUser(Auth::user()->id) == true)
                                                                             <a class="btn btn-sm btn-block btn-success"
-                                                                               href="{{ route('user.memberships', Auth::user()->id) }}"
+                                                                               href="#"
                                                                                role="button">Subscribed</a>
+                                                                        @elseif($membership->isWaitingForUser(Auth::user()->id) == true)
+                                                                            <a class="btn btn-sm btn-block btn-warning"
+                                                                               role="button"
+                                                                               href="#">Waiting</a>
                                                                         @else
                                                                             <a class="btn btn-sm btn-block btn-primary"
                                                                                role="button"

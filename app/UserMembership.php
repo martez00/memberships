@@ -36,4 +36,9 @@ class UserMembership extends Model
     {
         return $this->hasMany('App\ExtendToken', 'user_membership_id');
     }
+
+    public function stripeSessions()
+    {
+        return $this->hasMany('App\StripeSession', 'user_membership_id');
+    }
 }

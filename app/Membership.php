@@ -37,4 +37,12 @@ class Membership extends Model
             return true;
         return false;
     }
+
+    public function isWaitingForUser($user_id)
+    {
+        $userMemberships = UserMembership::where('user_id', $user_id)->where('membership_id', $this->id)->where('status', 'WAITING')->limit(1)->get();
+        if($userMemberships->first())
+            return true;
+        return false;
+    }
 }

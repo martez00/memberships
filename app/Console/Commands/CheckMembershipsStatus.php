@@ -22,7 +22,7 @@ class CheckMembershipsStatus extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Check finished memberships';
 
     /**
      * Create a new command instance.
