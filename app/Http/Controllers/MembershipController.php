@@ -15,27 +15,46 @@ class MembershipController extends Controller
         $memberships = Membership::orderBy('id', 'desc')->paginate(10);
         return view('admin.memberships.index')->with('memberships', $memberships);
     }
+
     public function mainIndex(Request $request)
     {
         $query = Membership::query();
 
-        $query->when(request()->has('type_id') && request()->get('type_id'), function ($q) {
+        $query->when(request()->get('type_id'), function ($q) {
             $q->where('memberships.type_id', request()->get('type_id'));
         });
 
-        $query->when(request()->has('name') && request()->get('name'), function ($q) {
-            $q->where('memberships.name', 'LIKE', '%'.request()->get('name').'%');
+        $query->when(request()->get('name'), function ($q) {
+            $q->where('memberships.name', 'LIKE', '%' . request()->get('name') . '%');
         });
 
-        $query->when(request()->has('description') && request()->get('description'), function ($q) {
-            $q->where('memberships.description', 'LIKE', '%'.request()->get('description').'%');
+        $query->when(request()->get('description'), function ($q) {
+            $q->where('memberships.description', 'LIKE', '%' . request()->get('description') . '%');
+        });
+
+        $query->when(request()->get('price'), function ($q) {
+            switch (request()->get('price_param')) {
+                case "equals":
+                    $q->where('memberships.price', request()->get('price'));
+                    break;
+                case "more":
+                    $q->where('memberships.price', '>', request()->get('price'));
+                    break;
+                case "less":
+                    $q->where('memberships.price', '<', request()->get('price'));
+                    break;
+                default:
+                    $q->where('memberships.price', request()->get('price'));
+                    break;
+            }
         });
 
         $memberships = $query->orderBy('id', 'desc')->paginate(10);
 
         $membershipsTypes = MembershipType::all();
 
-        return view('memberships.index')->with('memberships', $memberships)->with('membershipsTypes', $membershipsTypes)->with('selectedType', null);
+        return view('memberships.index')->with('memberships', $memberships)->with('membershipsTypes',
+            $membershipsTypes)->with('priceSearchParams', Membership::priceSearchParams);
     }
 
     public function create()
@@ -69,7 +88,8 @@ class MembershipController extends Controller
         $membership = Membership::find($id);
         $membershipsTypes = MembershipType::pluck('name', 'id');
         $membershipsTypes->prepend('...', '-1');
-        return view('admin.memberships.edit')->with('membership', $membership)->with('membershipsTypes', $membershipsTypes);
+        return view('admin.memberships.edit')->with('membership', $membership)->with('membershipsTypes',
+            $membershipsTypes);
     }
 
     public function update(UpdateMembershipRequest $request, $id)
@@ -85,7 +105,9 @@ class MembershipController extends Controller
         $membership->delete();
         return redirect()->route('memberships.index')->with('success', 'Membership was succesfully deleted!');
     }
-    public function showSubscribe($id){
+
+    public function showSubscribe($id)
+    {
         $membership = Membership::find($id);
         return view('memberships.subscribe')->with('membership', $membership);
     }

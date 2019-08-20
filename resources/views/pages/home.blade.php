@@ -7,7 +7,7 @@
                 <div class="col-md-6 intro-info order-md-first order-last">
                     <h2>Online programming<br>courses for <span>beginners!</span></h2>
                     <div>
-                        <a href="#about" class="btn-get-started scrollto">Get Started</a>
+                        <a href="{{ route('memberships.mainIndex') }}" class="btn-get-started scrollto">Get Started</a>
                     </div>
                 </div>
 
@@ -25,7 +25,7 @@
 
                 <div class="col-lg-5 col-md-6">
                     <div class="about-img">
-                        <img src="img/about-img.jpg" alt="">
+                        <img src="{{ asset('img/about-img.png') }}" alt="">
                     </div>
                 </div>
 

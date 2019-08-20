@@ -28,10 +28,33 @@
                                         <input type="text" class="form-control" name="description"
                                                id="description" value="{{ request()->get('description') }}">
                                     </div>
+                                    <div class="col-lg-12">
+                                        <label for="price">{{ __('Price') }}</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend search-panel">
+                                                <button type="button" class="btn btn-default dropdown-toggle"
+                                                        data-toggle="dropdown">
+                                                    <span id="search_concept">@if(request()->get('price_param')) {{ $priceSearchParams[request()->get('price_param')] }} @else
+                                                            Filter by @endif</span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    @foreach($priceSearchParams as $key => $value)
+                                                        <li class="dropdown-item"><a href="#{{ $key }}">{{ $value }}</a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                            <input type="hidden" name="price_param" value="{{ request()->get('price_param') }}" id="search_param">
+                                            <input type="text" class="form-control" name="price"
+                                                   id="price" value="{{ request()->get('price') }}">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row form-group mb-1">
                                     <div class="col-lg-12">
-                                        <button type="submit" class="btn btn-block btn-outline-light" id="search">Search</button>
+                                        <button type="submit" class="btn btn-block btn-outline-light" id="search">
+                                            Search
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -92,7 +115,8 @@
                                     @else
                                         <div class="row form-group mb-0">
                                             <div class="col-lg-12">
-                                                <div class="alert alert-warning mb-0">There are no created memberships which match you criterias.
+                                                <div class="alert alert-warning mb-0">There are no created memberships
+                                                    which match you criterias.
                                                 </div>
                                             </div>
                                         </div>
@@ -105,4 +129,18 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('main_scripts')
+    <script>
+        $(document).ready(function (e) {
+            $('.search-panel .dropdown-menu').find('a').click(function (e) {
+                e.preventDefault();
+                var param = $(this).attr("href").replace("#", "");
+                var concept = $(this).text();
+                $('.search-panel span#search_concept').text(concept);
+                $('.input-group #search_param').val(param);
+            });
+        });
+    </script>
 @endsection

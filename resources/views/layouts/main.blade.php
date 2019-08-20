@@ -11,8 +11,10 @@
 
             <nav class="main-nav float-right d-none d-lg-block">
                 <ul>
-                    <li class="{{ (strpos(Route::currentRouteName(), 'home') !== false || Route::currentRouteName() === null) ? 'active-menu' : '' }}"><a href="{{ url('/') }}">Home</a></li>
-                    <li class="{{ (strpos(Route::currentRouteName(), 'memberships.mainIndex') !== false) ? 'active-menu' : '' }}"><a href="{{ route('memberships.mainIndex') }}">Courses</a></li>
+                    <li class="{{ (strpos(Route::currentRouteName(), 'home') !== false || Route::currentRouteName() === null) ? 'active-menu' : '' }}">
+                        <a href="{{ url('/') }}">Home</a></li>
+                    <li class="{{ (strpos(Route::currentRouteName(), 'memberships.mainIndex') !== false) ? 'active-menu' : '' }}">
+                        <a href="{{ route('memberships.mainIndex') }}">Courses</a></li>
                     <li><a href="#">Contact Us</a></li>
                     @guest
                         <li>
@@ -22,13 +24,13 @@
                         <li class="drop-down">
                             <a href="#">{{ Auth::user()->name }}</a>
                             <ul>
-                                    @if (Auth::user()->isAdmin())
+                                @if (Auth::user()->isAdmin())
                                     <li>
                                         <a href="{{ route('admin.dashboard') }}">
                                             {{ __('Admin Dashboard') }}
                                         </a>
                                     </li>
-                                    @endif
+                                @endif
                                 <li>
                                     <a href="{{ route('user.dashboard') }}">
                                         {{ __('User Dashboard') }}
@@ -55,4 +57,8 @@
         </div>
     </header>
     @yield('main_content')
+@endsection
+
+@section('scripts')
+    @yield('main_scripts')
 @endsection

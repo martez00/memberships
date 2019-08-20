@@ -14,6 +14,12 @@ class Membership extends Model
         'name', 'description', 'price', 'type_id'
     ];
 
+    const priceSearchParams = array(
+        'equals' => 'It`s equals',
+        'more' => 'More than',
+        'less' => 'Less than'
+    );
+
     public function usersMembership()
     {
         return $this->hasMany('App\UserMembership', 'membership_id');
